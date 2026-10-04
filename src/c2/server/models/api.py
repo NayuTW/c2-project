@@ -32,6 +32,7 @@ class CreateTaskRequest(BaseModel):
 
 class Task(BaseModel):
     task_id: str = Field(min_length=1, max_length=100)
+    # task_type uses a Literal type to define the allowed values, ensuring that only supported task types are accepted.
     task_type: Literal[
         "get_host_metadata",
         "echo",
