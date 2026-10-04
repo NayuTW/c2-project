@@ -30,6 +30,16 @@ class CreateTaskRequest(BaseModel):
     parameters: dict[str, Any] = Field(default_factory=dict)
 
 
+class Task(BaseModel):
+    task_id: str = Field(min_length=1, max_length=100)
+    task_type: Literal[
+        "get_host_metadata",
+        "echo",
+        "sleep",
+    ]
+    parameters: dict[str, Any] = Field(default_factory=dict)
+
+
 class PollResponse(BaseModel):
     tasks: list[Task]
 

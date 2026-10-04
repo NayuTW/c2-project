@@ -6,7 +6,7 @@ from c2.server.models.api import (
     Task,
     TaskResultRequest,
 )
-from c2.server import agent_service
+from c2.server.services import agent_service
 
 SUPPORTED_TASKS = {
     "get_host_metadata",
