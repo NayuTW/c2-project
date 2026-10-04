@@ -42,7 +42,7 @@ def submit_result(
         raise ValueError("Task ID mismatch")
         
     if request.status == "failed" and not request.error:
-        raise ValueError("Failed tasks must not include an error")
+        raise ValueError("Failed tasks must include an error")
 
     # For Milestone 1, we just print the result.
     # Later it will be stored in SQLite.
