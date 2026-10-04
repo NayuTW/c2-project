@@ -23,8 +23,10 @@ router = APIRouter(
 def register_agent(request: RegisterRequest) -> RegisterResponse:
     try:
         return agent_service.register_agent(request)
-    except: ValueError as exc:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(exc),
+    except ValueError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail=str(exc),
         ) from exc
 
 
