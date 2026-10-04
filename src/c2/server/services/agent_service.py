@@ -1,5 +1,3 @@
-from platform import architecture
-from anyio._core import _tasks
 from secrets import token_urlsafe
 from uuid import uuid4
 

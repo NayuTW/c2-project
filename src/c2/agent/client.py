@@ -50,7 +50,7 @@ class C2Client:
         error: str | None = None,
     ) -> dict:
         response = self.http.post(
-            f"{self.base_url}/api/v1/tasks/{task_id}/results",
+            f"{self.base_url}/api/v1/tasks/{task_id}/result",
             json={
                 "agent_id": agent_id,
                 "task_id": task_id,
