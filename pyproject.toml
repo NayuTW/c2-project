@@ -7,7 +7,15 @@ authors = [
     { name = "NayuTW", email = "trevordwilliams10@gmail.com" }
 ]
 requires-python = ">=3.14"
-dependencies = []
+dependencies = [
+    "fastapi>=0.142.0",
+    "httpx>=0.28.1",
+    "pydantic>=2.13.5",
+    "pytest>=9.1.1",
+    "ruff>=0.16.9",
+    "typer>=0.27.2",
+    "uvicorn>=0.54.0",
+]
 
 [project.scripts]
 c2-project = "c2_project:main"
