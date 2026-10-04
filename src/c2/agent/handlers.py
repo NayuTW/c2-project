@@ -11,7 +11,7 @@ def get_host_metadata(parameters: dict[str, Any]) -> dict[str, str]:
         "hostname": platform.node(),
         "system": platform.system(),
         "release": platform.release(),
-        "machine": platform.release(),
+        "machine": platform.machine(),
     }
 
 
