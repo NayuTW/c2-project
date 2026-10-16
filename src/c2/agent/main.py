@@ -72,6 +72,8 @@ def process_task(
     task_type = task.get("task_type")
     parameters = task.get("parameters", {})
 
+    # We want the agent client to validate task structure itself
+    # rather than trusting the payload from upstream
     if not isinstance(task_id, str):
         print("Rejecting task with invalid task_id")
         return
@@ -86,6 +88,9 @@ def process_task(
 
     print(f"Received task {task_id}: {task_type}")
     
+    # We isolate the task failures from the agent
+    # so a malformed task does not crash agent
+    # while also sending error details to C2
     try:
         result = execute_task(task_type, parameters)
 
@@ -155,6 +160,9 @@ def run_agent(args: argparse.Namespace) -> None:
 
             time.sleep(poll_interval)
         
+        # We want to differentiate between
+        # HTTP status errors and transport errors
+        # Here is where we handle HTTP status errors
         except httpx.HTTPStatusError as exc:
             print(
                 f"HTTP error: "
@@ -167,6 +175,7 @@ def run_agent(args: argparse.Namespace) -> None:
 
             time.sleep(poll_interval)
 
+        # Here is where we handle transport errors
         except httpx.RequestError as exc:
             print(f"Network error: {exc}")
 

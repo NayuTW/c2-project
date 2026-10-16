@@ -19,6 +19,8 @@ def register_agent(request: RegisterRequest) -> RegisterResponse:
     if request.enrollment_token != EXPECTED_ENROLLMENT_TOKEN:
         raise ValueError("Invalid enrollment token")
     
+    # We use uuid4() and token_urlsafe() here
+    # because it is more secure than random()
     agent_id = f"agent-{uuid4()}"
     session_token = token_urlsafe(32)
 
@@ -46,10 +48,11 @@ def poll_for_tasks(request: PollRequest) -> PollResponse:
         
     if agent["session_token"] != request.session_token:
         raise PermissionError("Invalid session token")
-
+    
+    # For now we are emptying the queue
+    # and delivering all queued tasks on poll.
     tasks = _tasks.get(request.agent_id, [])
 
-    # For simple first version, deliver all queued tasks.
     _tasks[request.agent_id] = []
 
     return PollResponse(tasks=tasks)

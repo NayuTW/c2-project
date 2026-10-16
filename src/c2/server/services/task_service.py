@@ -52,6 +52,8 @@ def submit_result(
     )
 
 
+# We will validate task structure here
+# but we will also validate it agent client side
 def validate_task_parameters(
     task_type: str,
     parameters: dict[str, Any],
