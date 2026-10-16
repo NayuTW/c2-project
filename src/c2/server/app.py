@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.responses import RedirectResponse
 from c2.server.routes import agents, tasks
 
 app = FastAPI(
@@ -9,6 +10,9 @@ app = FastAPI(
 app.include_router(agents.router)
 app.include_router(tasks.router)
 
+@app.get("/")
+def redirect_to_docs():
+    return RedirectResponse("/docs")
 
 @app.get("/health")
 def health_check() -> dict[str, str]:
