@@ -58,4 +58,3 @@ At its current stage in development, you can use uv in two separate terminals to
   "task_type": "get_host_metadata",
   "parameters": {}
   }'
-```
