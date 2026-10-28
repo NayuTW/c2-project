@@ -10,7 +10,7 @@ from c2.agent.handlers import execute_task
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Educational C2 afent simulator"
+        description="Educational C2 agent simulator"
     )
     
     parser.add_argument(

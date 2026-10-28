@@ -47,8 +47,7 @@ def submit_result(
     # For Milestone 1, we just print the result.
     # Later it will be stored in SQLite.
     print(
-        f"Result received for {task_id}"
-        f"status={request.status}, result={request.result}"
+        f"Result received for {task_id}" f"status={request.status}, result={request.result}"
     )
 
 

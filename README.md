@@ -17,7 +17,7 @@ Create and evaluate a lightweight authenticated Python task-orchestration server
     - Register with the server
     - Poll periodically
     - Accept only predefined tasks
-    - Execite tasks locally
+    - Execute tasks locally
     - Submit structured results
     - Retry safely after temporary failures
     - Stop cleanly
