@@ -72,14 +72,3 @@ def init_db(db_path: str | None = None) -> None:
             CREATE INDEX IF NOT EXISTS idx_agents_last_seen ON agents(last_seen);
             CREATE INDEX IF NOT EXISTS idx_audit_logs_timestamp ON audit_logs(timestamp);
         """)
-
-
-def get_agents(db_path: str | None = None) -> list[sqlite3.Row]:
-    """Return all agents ordered by last seen time."""
-    with get_db(db_path) as conn:
-        cursor = conn.execute(
-            """
-            SELECT * FROM agents
-            ORDER BY last_seen DESC NULLS LAST, created_at DESC
-            """)
-        return cursor.fetchall()
