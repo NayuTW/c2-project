@@ -41,22 +41,31 @@ def init_db(db_path: str | None = None) -> None:
             CREATE TABLE IF NOT EXISTS agents (
                 agent_id TEXT PRIMARY KEY,
                 session_token_hash TEXT NOT NULL,
+                agent_version TEXT NOT NULL,
                 platform TEXT NOT NULL,
                 architecture TEXT NOT NULL,
                 registered_at TEXT NOT NULL,
-                last_seen TEXT NOT NULL,
+                last_seen_at TEXT NOT NULL,
                 status TEXT NOT NULL DEFAULT 'online'
             );
 
             CREATE TABLE IF NOT EXISTS tasks (
                 task_id TEXT PRIMARY KEY,
-                agent_id TEXT NOT NULL, REFERENCES agents(agent_id) ON DELETE CASCADE,
+                agent_id TEXT NOT NULL REFERENCES agents(agent_id) ON DELETE CASCADE,
                 task_type TEXT NOT NULL,
                 parameters TEXT NOT NULL,
                 status TEXT NOT NULL DEFAULT 'pending',
                 created_at TEXT NOT NULL,
                 dispatched_at TEXT,
                 completed_at TEXT
+            );
+
+            CREATE TABLE IF NOT EXISTS task_results (
+                task_id TEXT PRIMARY KEY REFERENCES tasks(task_id) ON DELETE CASCADE,
+                status TEXT NOT NULL,
+                result TEXT,
+                error TEXT,
+                received_at TEXT NOT NULL
             );
 
             CREATE TABLE IF NOT EXISTS audit_logs (
@@ -69,6 +78,6 @@ def init_db(db_path: str | None = None) -> None:
                 );
 
             CREATE INDEX IF NOT EXISTS idx_tasks_agent_status ON tasks(agent_id, status);
-            CREATE INDEX IF NOT EXISTS idx_agents_last_seen ON agents(last_seen);
+            CREATE INDEX IF NOT EXISTS idx_agents_last_seen ON agents(last_seen_at);
             CREATE INDEX IF NOT EXISTS idx_audit_logs_timestamp ON audit_logs(timestamp);
         """)
