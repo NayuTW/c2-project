@@ -39,7 +39,7 @@ def create_task(
         if cursor.fetchone() is None:
             raise ValueError("Unknown agent")
 
-        conn.ececute(
+        conn.execute(
             """
             INSERT INTO tasks (
                 task_id,
@@ -47,7 +47,7 @@ def create_task(
                 task_type,
                 parameters,
                 status,
-                created_at,
+                created_at
             ) VALUES (?, ?, ?, ?, 'pending', ?)
             """,
             (
@@ -117,7 +117,8 @@ def submit_result(
 
         # Here we will update task status and completion time
         conn.execute(
-            "UPDATE tasks SET status = ?, completed_at = ? WHERE tsk_id = ?",
+            "UPDATE tasks SET status = ?, completed_at = ? WHERE task_id = ?",
+            (request.status, now, task_id),
         )
 
 

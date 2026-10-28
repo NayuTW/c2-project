@@ -1,5 +1,3 @@
-from asyncio import taskgroups
-from asyncio import taskgroups
 import hashlib
 import json
 import secrets
@@ -55,7 +53,7 @@ def register_agent(
         raise ValueError("Invalid enrollment token")
     
     agent_id = f"agent-{uuid4()}"
-    session_token = secrets.tokens_urlsafe(32)
+    session_token = secrets.token_urlsafe(32)
     session_token_hash = hash_session_token(session_token)
     now = datetime.now(timezone.utc).isoformat()
     poll_interval = get_default_poll_interval()
@@ -69,7 +67,7 @@ def register_agent(
                 agent_version,
                 platform,
                 architecture,
-                registered_at
+                registered_at,
                 last_seen_at,
                 status
                 ) VALUES (?, ?, ?, ?, ?, ?, ?, 'online')
@@ -109,7 +107,7 @@ def poll_for_tasks(
 
         # We will fetch any pending tasks in FIFO order
         cursor = conn.cursor()
-        cursor.exevure(
+        cursor.execute(
             """
             SELECT task_id, task_type, parameters
             FROM tasks
