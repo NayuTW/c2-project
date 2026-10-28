@@ -51,6 +51,9 @@ coverage.xml
 .pytest_cache/
 cover/
 
+# SQLite db files
+c2.db
+
 # Translations
 *.mo
 *.pot
