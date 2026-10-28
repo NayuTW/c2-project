@@ -101,7 +101,7 @@ def poll_for_tasks(
 
         # We will update last seen and ensure online status here
         conn.execute(
-            "Update agents SET last_seen_at = ?, status = 'online' WHERE agent_id = ?",
+            "UPDATE agents SET last_seen_at = ?, status = 'online' WHERE agent_id = ?",
             (now, request.agent_id),
         )
 
