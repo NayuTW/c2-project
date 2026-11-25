@@ -18,3 +18,8 @@ def get_enrollment_token() -> str:
 def get_default_poll_interval() -> int:
     """Return default polling interval in seconds. """
     return int(os.getenv("C2_POLL_INTERVAL", "10"))
+
+
+def get_operator_api_key() -> str:
+    """Return the operator API key."""
+    return os.getenv("C2_OPERATOR_KEY", "dev-operator-key")
