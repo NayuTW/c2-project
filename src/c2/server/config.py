@@ -23,3 +23,8 @@ def get_default_poll_interval() -> int:
 def get_operator_api_key() -> str:
     """Return the operator API key."""
     return os.getenv("C2_OPERATOR_KEY", "dev-operator-key")
+
+
+def get_agent_timeout_seconds() -> int:
+    """Return agent timeout threshold in seconds."""
+    return int(os.getenv("C2_AGENT_TIMEOUT", "60"))

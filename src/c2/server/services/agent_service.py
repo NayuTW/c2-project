@@ -2,10 +2,14 @@ import hashlib
 import json
 import secrets
 import sqlite3
-from datetime import datetime, timezone
+from datetime import UTC, datetime, timedelta, timezone
 from uuid import uuid4
 
-from c2.server.config import get_default_poll_interval, get_enrollment_token
+from c2.server.config import (
+    get_agent_timeout_seconds,
+    get_default_poll_interval,
+    get_enrollment_token,
+)
 from c2.server.db import get_db
 from c2.server.models.api import (
     PollRequest,
@@ -144,3 +148,22 @@ def poll_for_tasks(
             )
 
     return PollResponse(tasks=tasks)
+
+
+def check_agent_timeouts(db_path: str | None = None) -> int:
+    """Mark agents as timed_out if they haven't polled recently. Returns count updated."""
+    cutoff = (
+        datetime.now(UTC)
+        - timedelta(seconds=get_agent_timeout_seconds())
+    ).isoformat()
+
+    with get_db(db_path) as conn:
+        cursor = conn.execute(
+            """
+            UPDATE agents
+            SET status = 'timed_out'
+            WHERE status = 'online' AND last_seen_at < ?
+            """,
+            (cutoff,),
+        )
+    return cursor.rowcount
